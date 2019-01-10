@@ -1,3 +1,5 @@
+def read_reviews_from_file(file_name, app_name):
+    return []
 
 def set_reviews():
     rev1 = "i enjoy the game but there are way too many ads. I'd rather pay a dollar than have to watch ads. " \
