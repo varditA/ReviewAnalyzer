@@ -11,7 +11,6 @@ def get_sentiment(sid, sentence):
 def zip_similar_sents(n_gram_results):
     dict_by_word = {}
     for (res, sent, prob) in n_gram_results:
-        # sent = ' '.join(res)
         tagger = nltk.pos_tag(res)
         for (word, tag) in tagger:
             if 'NN' in tag:
@@ -30,17 +29,9 @@ def find_neg_sents(dict_by_word):
         neg_counter = 0
         neg_or_pos_counter = 0
         for (sent, prob) in dict_by_word[word]:
-            # sentiment, prob = get_sentiment(sent[0])
-            # if sentiment == "neg":
-            #     neg_counter += 1
-            #     neg_or_pos_counter += 1
             if prob > max_prob:
                 max_prob_sent = sent
                 max_prob = prob
-            # elif sentiment == "pos":
-            #     neg_or_pos_counter += 1
-        # if neg_counter > neg_or_pos_counter * 0.9:
-        #     neg_sents.append(max_prob_sent)
         neg_sents.append(max_prob_sent)
 
     return neg_sents
@@ -55,10 +46,8 @@ def analyzerFunc(n_gram_results):
         sentiment, prob = get_sentiment(sid, sent)
         if sentiment == 'neg' and prob > 0.6:
             result.add((res, sent, prob))
-    # print(result)
 
     dict_by_word = zip_similar_sents(result)
     neg_sents = find_neg_sents(dict_by_word)
 
-    # print(set(neg_sents))
     return set(neg_sents)
