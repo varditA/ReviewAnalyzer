@@ -1,5 +1,16 @@
+import json
+
+
 def read_reviews_from_file(file_name, app_name):
-    return []
+    with open(file_name) as json_file:
+        data = json.load(json_file)
+        # for p in data[app_name]:
+        #     print('Name: ' + p['name'])
+        #     print('Website: ' + p['website'])
+        #     print('From: ' + p['from'])
+        #     print('')
+    return data[app_name]
+
 
 def set_reviews():
     rev1 = "i enjoy the game but there are way too many ads. I'd rather pay a dollar than have to watch ads. " \

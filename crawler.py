@@ -1,6 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
+import json
 
 # todo upsate the appList with the apps' names
 appsList = list()
@@ -20,7 +21,7 @@ def getReviews(projectsDict):
         href = link.a.get("href")
         projects_urls.add("https://play.google.com" + href)
     for project_url in projects_urls:
-        # driver.implicitly_wait(30)
+        driver.implicitly_wait(30)
         time.sleep(2)
         driver.get(project_url + "&showAllReviews=true")
         new_soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -29,10 +30,12 @@ def getReviews(projectsDict):
         for s in span:
             reviews.append(s.text)
         projectsDict[project_url] = reviews
+
         # print(reviews)
-
+    #     problem: Google Play Games page
     driver.close()
-
+    with open('reviews.txt', 'w') as outfile:
+        json.dump(projectsDict, outfile)
 
 if __name__ == "__main__":
     projects = {}
