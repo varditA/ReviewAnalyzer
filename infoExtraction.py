@@ -4,7 +4,6 @@ from nltk.corpus import stopwords
 from nltk.util import ngrams
 from collections import Counter
 
-
 exclude = set(string.punctuation)
 exclude.add("“")
 exclude.add("”")
@@ -35,3 +34,30 @@ def get_most_popular_trigrams(reviews: list, n):
             top_trigrams.append(trigram)
     return top_tokens, top_trigrams
 
+
+def get_sentences_most_popular_trigrams(reviews: list, n):
+    concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
+    sentences = concatenated_reviews_with_punctuation.split(".")
+    trigrams = []
+    tokens = []
+    for s in sentences:
+        no_punct_sentence = ''.join(ch if ch not in exclude else " " for ch in s)
+        filtered_sentence = " ".join(
+            word for word in [w for w in no_punct_sentence.split() if w.lower() not in stop_words])
+        sentence_tokens = nltk.word_tokenize(filtered_sentence)
+        trigrams.extend(list(ngrams(sentence_tokens, n)))
+        tokens.extend(sentence_tokens)
+    tokens_counter = Counter(tokens)
+    sorted_tokens = sorted(tokens_counter, key=tokens_counter.get, reverse=True)
+    tagged_tokens = nltk.pos_tag(sorted_tokens)
+    top_tokens = []  # only nouns
+    counter = 0
+    while len(top_tokens) < 5:
+        if "NN" in tagged_tokens[counter][1]:
+            top_tokens.append(sorted_tokens[counter])
+        counter += 1
+    top_trigrams = []
+    for trigram in trigrams:
+        if len(set(trigram) & set(top_tokens)) > 0:
+            top_trigrams.append(trigram)
+    return top_tokens, top_trigrams
