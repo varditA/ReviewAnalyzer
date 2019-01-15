@@ -3,12 +3,9 @@ from bs4 import BeautifulSoup
 import time
 import json
 
-# todo upsate the appList with the apps' names
-appsList = list()
 
-
-def getReviews(projectsDict):
-    projects_urls = set()
+def getReviews(appsDict, appsList):
+    apps_urls = set()
     url = 'https://play.google.com/store/apps/collection/recommended_for_you?clp=ogoKCAEqAggBUgIIAQ%3D%3D:S:ANO1ljJG6Aw&gsr=Cg2iCgoIASoCCAFSAggB:S:ANO1ljLKNqE'
     # setting up connection, get the info and closing it
     driver = webdriver.Chrome()
@@ -19,24 +16,30 @@ def getReviews(projectsDict):
     # html_soup.findAll('div', {"class": "card no-rationale square-cover apps small"})
     for link in html_soup.findAll('div', {"class": "card no-rationale square-cover apps small"}):
         href = link.a.get("href")
-        projects_urls.add("https://play.google.com" + href)
-    for project_url in projects_urls:
+        apps_urls.add("https://play.google.com" + href)
+
+    for app_url in apps_urls:
+
         driver.implicitly_wait(30)
         time.sleep(2)
-        driver.get(project_url + "&showAllReviews=true")
-        new_soup = BeautifulSoup(driver.page_source, 'html.parser')
+        driver.get(app_url + "&showAllReviews=true")
+        try:
+            new_soup = BeautifulSoup(driver.page_source, 'lxml')
+        except:
+            continue
+        app_title = (new_soup.find('h1', {"class": "AHFaub"})).text
+        appsList.append(app_title)
         span = new_soup.findAll('span', jsname="bN97Pc")
         reviews = []
         for s in span:
             reviews.append(s.text)
-        projectsDict[project_url] = reviews
+        appsDict[app_title] = reviews
 
-        # print(reviews)
-    #     problem: Google Play Games page
     driver.close()
     with open('reviews.txt', 'w') as outfile:
-        json.dump(projectsDict, outfile)
+        json.dump(appsDict, outfile)
 
 if __name__ == "__main__":
-    projects = {}
-    getReviews(projects)
+    appsDict = {}
+    appsList = list()
+    getReviews(appsDict, appsList)
