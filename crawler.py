@@ -39,7 +39,8 @@ def getReviews(appsDict, appsList):
     with open('reviews.txt', 'w') as outfile:
         json.dump(appsDict, outfile)
 
-if __name__ == "__main__":
-    appsDict = {}
-    appsList = list()
-    getReviews(appsDict, appsList)
+
+# if __name__ == "__main__":
+#     appsDict = {}
+#     appsList = list()
+#     getReviews(appsDict, appsList)
