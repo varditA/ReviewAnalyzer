@@ -12,13 +12,12 @@ topic_num = 10
 def main():
     projects = {}
     app_names = []
-    crawler.getReviews(projects, app_names)
-    popular_subjects = topicExtractor.get_apps_popular_nn_aj(projects, topic_num)
 
-    # projects["a"] = "b"
-    # projects["c"] = "d"
-    # popular_subjects = ["aaa", "bbb", "ccc"]
-    # app_names = ["a", "c"]
+    # crawling Google Play Store
+    crawler.getReviews(projects, app_names)
+
+    # getting the popular topics in all the apps
+    popular_subjects = topicExtractor.get_apps_popular_nn_aj(projects, topic_num)
 
     data = {"app_names": app_names, "popular_subjects": popular_subjects}
     with open('info.txt', 'w') as outfile:

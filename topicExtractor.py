@@ -1,5 +1,13 @@
+import string
 import nltk
 from collections import Counter
+from nltk.corpus import stopwords
+
+exclude = set(string.punctuation)
+exclude.add("“")
+exclude.add("”")
+stop_words = set(stopwords.words('english'))
+stop_words.remove("too")
 
 
 def process_apps_reviews(apps_reviews):

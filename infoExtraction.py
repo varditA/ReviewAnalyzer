@@ -10,12 +10,8 @@ exclude.add("”")
 stop_words = set(stopwords.words('english'))
 stop_words.remove("too")
 
-di = {"app1": ["great game, too many ads", "ads all the time in game"],
-      "app2": ["crushes every second, cant play!", "why the app creshes all the??"]}
-
 
 def get_most_popular_trigrams(reviews: list, n, topics):
-    # get_apps_popular_nn_aj(di, 100)
     concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
     concatenated_reviews = ''.join(ch for ch in concatenated_reviews_with_punctuation if ch not in exclude)
     filtered_text = [w for w in concatenated_reviews.split() if w.lower() not in stop_words]
