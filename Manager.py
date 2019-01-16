@@ -20,8 +20,10 @@ def get_app_negative_reviews(appName):
     # text = reviewsExtraction.set_reviews()
     # text = reviewsExtraction.set_reviews2()
 
+    # todo fix read data from text
+    topics = []
     print("function get_most_popular_trigrams")
-    tokens, n_gram_results = info.get_most_popular_trigrams(text, 3)
+    tokens, n_gram_results = info.get_most_popular_trigrams(text, 3, topics)
     print(n_gram_results)
     neg_sents = analyzer.analyzerFunc(n_gram_results)
     print(neg_sents)
