@@ -26,4 +26,5 @@ def get_apps_popular_nn_aj(apps_reviews: dict, n):
     filtered_tagged_tokens = Counter(
         [tagged_token[0] for tagged_token in tagged_tokens if "NN" in tagged_token[1] or "JJ" in tagged_tokens[1]])
     sorted_tokens = sorted(filtered_tagged_tokens, key=filtered_tagged_tokens.get, reverse=True)
-    print(sorted_tokens[:n])
+    # print(sorted_tokens[:n])
+    return sorted_tokens[:n]

@@ -8,6 +8,7 @@ import topicExtractor
 
 topic_num = 10
 
+
 def main():
     projects = {}
     app_names = []
