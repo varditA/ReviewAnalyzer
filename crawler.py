@@ -40,7 +40,7 @@ def getReviews(appsDict, appsList):
         json.dump(appsDict, outfile)
 
 
-# if __name__ == "__main__":
-#     appsDict = {}
-#     appsList = list()
-#     getReviews(appsDict, appsList)
+if __name__ == "__main__":
+    appsDict = {}
+    appsList = list()
+    getReviews(appsDict, appsList)
