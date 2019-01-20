@@ -23,18 +23,20 @@ def analyze_results(ngrams, topics):
     return statistics
 
 
-def plot_reviews_analysis(app_name, ngrams, topics):
+def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
     """
     Plot the given app reviews analysis results
     :param app_name: The application name
     :param ngrams: list of ngrams
     :param topics: dictionary with topics as keys and list of words os values
+    :param file_path: the directory where the file will be saved
     """
     statistics = analyze_results(ngrams, topics)
     total_rating = sum(list(statistics.values()))
     names = list(statistics.keys())
     values = np.array(list(statistics.values())) / total_rating
-    plt.title("Reviews breakdown for \""+ app_name + "\"")
+    plt.clf()
+    plt.title("Reviews breakdown for \"" + app_name + "\"")
     plt.xlabel('Application problems categories')
     plt.ylim(0, 1)
     bar = plt.bar(range(len(statistics)), values, tick_label=names)
@@ -45,11 +47,13 @@ def plot_reviews_analysis(app_name, ngrams, topics):
                  '{:.2f}'.format(col.get_height()),
                  ha='center',
                  va='bottom')
-    plt.savefig(app_name.replace(" ","_") + "_plot.png")
-    plt.show()
+    plt.savefig(file_path + app_name.replace(" ", "_") + "_plot.png")
+    # plt.show()
+
 
 # Example that can be deleted
-ngrams_example = [('apple', 'banana', 'orange'), ('pen', 'bike', 'book'), ('dog', 'cat', 'mouse'),
-          ('apple', 'hello', 'bye'), ('bla', 'apple', 'bla2'), ('bike', 'bla3', 'orange')]
-topics_example = {'fruit': ['apple', 'banana', 'orange', 'kiwi'], 'item': ['pen', 'bike', 'book', 'computer'], 'animal': ['dog', 'cat', 'mouse', 'horse']}
-plot_reviews_analysis("Seven Boom", ngrams_example, topics_example)
+# ngrams_example = [('apple', 'banana', 'orange'), ('pen', 'bike', 'book'), ('dog', 'cat', 'mouse'),
+#                   ('apple', 'hello', 'bye'), ('bla', 'apple', 'bla2'), ('bike', 'bla3', 'orange')]
+# topics_example = {'fruit': ['apple', 'banana', 'orange', 'kiwi'], 'item': ['pen', 'bike', 'book', 'computer'],
+#                   'animal': ['dog', 'cat', 'mouse', 'horse']}
+# plot_reviews_analysis("Seven Boom", ngrams_example, topics_example)
