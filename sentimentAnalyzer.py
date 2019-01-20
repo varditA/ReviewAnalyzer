@@ -26,8 +26,6 @@ def find_neg_sents(dict_by_word):
     for word in dict_by_word:
         max_prob = 0
         max_prob_sent = ""
-        neg_counter = 0
-        neg_or_pos_counter = 0
         for (sent, prob) in dict_by_word[word]:
             if prob > max_prob:
                 max_prob_sent = sent
