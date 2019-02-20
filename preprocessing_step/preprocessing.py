@@ -2,10 +2,10 @@ import json
 import os
 
 # crawling google play to extract the reviews for each app
-import crawler
+import preprocessing_step.crawler as crawler
 
 # getting the popular subjects
-import topicExtractor
+import preprocessing_step.topicExtractor as topicExtractor
 
 topic_num = 10
 

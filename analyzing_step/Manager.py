@@ -1,16 +1,15 @@
 import json
 import os
 # Read the app reviews from the review file
-import reviewsExtraction
-
+from analyzing_step import reviewsExtraction
 # Extracts informative phrases from the received reviews
-import infoExtraction
+from analyzing_step import infoExtraction
 
 # Performs sentiment analysis for each of the phrases and remove similar phrases
-import sentimentAnalyzer
+from analyzing_step import sentimentAnalyzer
 
 # Plot the apps' reviews analysis results
-import results_analyzer
+from analyzing_step import results_analyzer
 
 
 def get_app_negative_reviews(appName, topics):
