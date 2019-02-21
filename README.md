@@ -24,7 +24,7 @@ Analyzing Step:
 
         reviewExtraction.py -
         Called by Manager.py
-        For every given app name, it extracts its reviews from a given file
+        For every chosen app name, it extracts its reviews from a given file
 
         infoExtraction.py -
         Called by Manager.py
@@ -32,8 +32,8 @@ Analyzing Step:
 
         sentimentAnalyzer.py -
         Called by Manager.py
-        For every app, it analyzes its phrases and determines its negative feedback
+        For a given app, it analyzes its phrases and determines its negative feedback
 
-        crawler.py -
+        result_analyzer.py –
         Called by Manager.py
-        crawling Google Play Store and write reviews for apps to json file
+        For the given app, plot the analysis results in graph.
