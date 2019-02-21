@@ -1,11 +1,11 @@
 import json
 # Read the app reviews from the review file
-import reviewsExtraction
+import reviews_extraction
 # Extracts informative phrases from the received reviews
-import infoExtraction
+import info_extraction
 
 # Performs sentiment analysis for each of the phrases and remove similar phrases
-import sentimentAnalyzer
+import sentiment_analyzer
 
 # Plot the apps' reviews analysis results
 import results_analyzer
@@ -15,7 +15,7 @@ import nltk
 
 def get_app_negative_reviews(app_name, topics):
     # extract reviews from the file the crawler created
-    text = reviewsExtraction.read_reviews_from_file("files/reviews.txt", app_name)
+    text = reviews_extraction.read_reviews_from_file("files/reviews.txt", app_name)
 
     # todo more reviews per game?
     reviews_num = len(text)
@@ -32,10 +32,10 @@ def get_app_negative_reviews(app_name, topics):
 
     # print("function get_sentences_most_popular_trigrams")
     # get all the trigrams from the reviews
-    n_gram_results = infoExtraction.get_sentences_most_popular_trigrams(text, 3)
+    n_gram_results = info_extraction.get_sentences_most_popular_trigrams(text, 3)
     # print(n_gram_results)
     # analyze the sentiment of each trigram, find only the negative trigrams
-    neg_sents = sentimentAnalyzer.analyzerFunc(n_gram_results)
+    neg_sents = sentiment_analyzer.analyzerFunc(n_gram_results)
     print(neg_sents)
     # plot the neg trigrams by the topic
     results_analyzer.plot_reviews_analysis(app_name, n_gram_results, topics, "Graphs/")

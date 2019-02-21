@@ -13,27 +13,27 @@ Preprocessing Step:
         Called by preprocessing.py
         responsible for creating the file with the reviews for each app.
 
-        topicExtractor.py -
+        topic_extractor.py -
         Called by preprocessing.py
         responsible for extracting the most popular nouns and adjectievs in all of the apps' reviews
 
 Analyzing Step:
-    Manager.py -
+    manager.py -
     Responsible for the whole process of analyzing the negative feedback.
     For every app, it analyze its reviews and set its negative feedback in a file
 
-        reviewExtraction.py -
-        Called by Manager.py
+        review_extraction.py -
+        Called by manager.py
         For every chosen app name, it extracts its reviews from a given file
 
-        infoExtraction.py -
-        Called by Manager.py
+        info_extraction.py -
+        Called by manager.py
         For every review, it extracts the informative phrases as a bigram/trigram words
 
-        sentimentAnalyzer.py -
-        Called by Manager.py
+        sentiment_analyzer.py -
+        Called by manager.py
         For a given app, it analyzes its phrases and determines its negative feedback
 
         result_analyzer.py –
-        Called by Manager.py
+        Called by manager.py
         For the given app, plot the analysis results in graph.
