@@ -50,6 +50,7 @@ def getReviews(appsDict, appsList):
 
     # setting up connection, get the info and closing it
     driver = webdriver.Chrome('modules/chromedriver.exe')
+
     driver.implicitly_wait(30)
 
     # url = "https://play.google.com/store"
@@ -94,5 +95,3 @@ def getReviews(appsDict, appsList):
         appsDict[app_title] = reviews
 
     driver.close()
-
-
