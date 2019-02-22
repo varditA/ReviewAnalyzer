@@ -4,9 +4,12 @@ from nltk.corpus import stopwords
 from nltk.util import ngrams
 from collections import Counter
 
+nltk.download("stopwords")
+nltk.download("punkt")
+
 exclude = set(string.punctuation)
-exclude.add("“")
-exclude.add("”")
+exclude.add("\"")
+exclude.add("\"")
 stop_words = set(stopwords.words('english'))
 stop_words.remove("too")
 

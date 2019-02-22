@@ -2,6 +2,10 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
+nltk.download('vader_lexicon')
+nltk.download('averaged_perceptron_tagger')
+
+
 def get_sentiment(sid, sentence):
     ss = sid.polarity_scores(sentence)
     sentiment = max(ss, key=ss.get)
