@@ -33,13 +33,13 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
     """
     statistics = analyze_results(ngrams, topics)
     total_rating = sum(list(statistics.values()))
-    names = list(statistics.keys())
-    values = np.array(list(statistics.values())) / total_rating
+    names = list(statistics.keys())[:-1]
+    values = (np.array(list(statistics.values())) / total_rating)[:-1]
     plt.clf()
     plt.title("Reviews breakdown for \"" + app_name + "\"")
     plt.xlabel('Application problems categories')
     plt.ylim(0, 1)
-    bar = plt.bar(range(len(statistics)), values, tick_label=names)
+    bar = plt.bar(range(len(values)), values, tick_label=names)
 
     for col in bar:
         plt.text(col.get_x() + col.get_width() / 2.0,
