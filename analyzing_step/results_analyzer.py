@@ -1,59 +1,99 @@
-import matplotlib.pyplot as plt
-import numpy as np
+import string
+import nltk
+from nltk.corpus import stopwords
+from nltk.util import ngrams
+from collections import Counter
+
+nltk.download("stopwords")
+nltk.download("punkt")
+
+exclude = set(string.punctuation)
+exclude.add("\"")
+exclude.add("\"")
+stop_words = set(stopwords.words('english'))
+stop_words.remove("too")
+
+# todo delete : old version with top tokens
+# def get_most_popular_trigrams(reviews: list, n):
+#     concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
+#     concatenated_reviews = ''.join(ch for ch in concatenated_reviews_with_punctuation if ch not in exclude)
+#     filtered_text = [w for w in concatenated_reviews.split() if w.lower() not in stop_words]
+#     concatenated_reviews = ' '.join(w for w in filtered_text)
+#     token = nltk.word_tokenize(concatenated_reviews)
+#     trigrams = list(ngrams(token, n))
+#     tokens = Counter(filtered_text)
+#     sorted_tokens = sorted(tokens, key=tokens.get, reverse=True)
+#     tagged_tokens = nltk.pos_tag(sorted_tokens)
+#     top_tokens = []
+#     counter = 0
+#     while len(top_tokens) < 5:
+#         if "NN" in tagged_tokens[counter][1]:
+#             top_tokens.append(sorted_tokens[counter])
+#         counter += 1
+#     top_tokens = sorted(tokens, key=tokens.get, reverse=True)[:5]
+#     top_trigrams = []
+#     for trigram in trigrams:
+#         if len(set(trigram) & set(top_tokens)) > 0:
+#             top_trigrams.append(trigram)
+#     return top_tokens, top_trigrams
+#
+#     # without top tokens
+#     return top_tokens, trigrams
 
 
-def analyze_results(ngrams, topics):
-    """
-    :param ngrams: list of ngrams
-    :param topics: dictionary with topics as keys and list of words os values
-    :return: The percentage of occurrences of each topic in the ngrams
-    """
-    statistics = dict.fromkeys(topics.keys(), 0)
-    statistics['No problem'] = 0
-    no_problem_flag = True
-    for topic, topic_words in topics.items():
-        for w in topic_words:
-            for ngram in ngrams:
-                if w in ngram:
-                    statistics[topic] += 1
-                    no_problem_flag = False
-            if no_problem_flag:
-                statistics['No problem'] += 1
-            no_problem_flag = True
-    return statistics
+def get_sentences_most_popular_trigrams(reviews: list, n):
+    concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
+    sentences = concatenated_reviews_with_punctuation.split(".")
+    trigrams = []
+    tokens = []
+    for s in sentences:
+        no_punct_sentence = ''.join(ch if ch not in exclude else " " for ch in s)
+        filtered_sentence = " ".join(
+            word for word in [w for w in no_punct_sentence.split() if w.lower() not in stop_words])
+        sentence_tokens = nltk.word_tokenize(filtered_sentence)
+        trigrams.extend(list(ngrams(sentence_tokens, n)))
+        tokens.extend(sentence_tokens)
+    tokens_counter = Counter(tokens)
+    sorted_tokens = sorted(tokens_counter, key=tokens_counter.get, reverse=True)
+    tagged_tokens = nltk.pos_tag(sorted_tokens)
+    top_tokens = []  # only nouns
+    counter = 0
+    while len(top_tokens) < 5:
+        if "NN" in tagged_tokens[counter][1]:
+            top_tokens.append(sorted_tokens[counter])
+        counter += 1
+    top_trigrams = []
+    for trigram in trigrams:
+        if len(set(trigram) & set(top_tokens)) > 0:
+            top_trigrams.append(trigram)
+    # return top_tokens, top_trigrams
+
+    # without top tokens
+    return top_tokens, trigrams
 
 
-def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
-    """
-    Plot the given app reviews analysis results
-    :param app_name: The application name
-    :param ngrams: list of ngrams
-    :param topics: dictionary with topics as keys and list of words os values
-    :param file_path: the directory where the file will be saved
-    """
-    statistics = analyze_results(ngrams, topics)
-    total_rating = sum(list(statistics.values()))
-    names = list(statistics.keys())
-    values = np.array(list(statistics.values())) / total_rating
-    plt.clf()
-    plt.title("Reviews breakdown for \"" + app_name + "\"")
-    plt.xlabel('Application problems categories')
-    plt.ylim(0, 1)
-    bar = plt.bar(range(len(statistics)), values, tick_label=names)
+def get_most_popular_trigrams(reviews: list, n):
+    concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
+    concatenated_reviews = ''.join(ch for ch in concatenated_reviews_with_punctuation if ch not in exclude)
+    filtered_text = [w for w in concatenated_reviews.split() if w.lower() not in stop_words]
+    concatenated_reviews = ' '.join(w for w in filtered_text)
+    token = nltk.word_tokenize(concatenated_reviews)
+    trigrams = list(ngrams(token, n))
 
-    for col in bar:
-        plt.text(col.get_x() + col.get_width() / 2.0,
-                 col.get_height(),
-                 '{:.2f}'.format(col.get_height()),
-                 ha='center',
-                 va='bottom')
-    plt.savefig(file_path + app_name.replace(" ", "_") + "_plot.png")
-    # plt.show()
+    return trigrams
 
 
-# Example that can be deleted
-# ngrams_example = [('apple', 'banana', 'orange'), ('pen', 'bike', 'book'), ('dog', 'cat', 'mouse'),
-#                   ('apple', 'hello', 'bye'), ('bla', 'apple', 'bla2'), ('bike', 'bla3', 'orange')]
-# topics_example = {'fruit': ['apple', 'banana', 'orange', 'kiwi'], 'item': ['pen', 'bike', 'book', 'computer'],
-#                   'animal': ['dog', 'cat', 'mouse', 'horse']}
-# plot_reviews_analysis("Seven Boom", ngrams_example, topics_example)
+def get_sentences_most_popular_trigrams(reviews: list, n):
+    concatenated_reviews_with_punctuation = " ".join(r for r in reviews)
+    sentences = concatenated_reviews_with_punctuation.split(".")
+    trigrams = []
+    tokens = []
+    for s in sentences:
+        no_punct_sentence = ''.join(ch if ch not in exclude else " " for ch in s)
+        filtered_sentence = " ".join(
+            word for word in [w for w in no_punct_sentence.split() if w.lower() not in stop_words])
+        sentence_tokens = nltk.word_tokenize(filtered_sentence)
+        trigrams.extend(list(ngrams(sentence_tokens, n)))
+        tokens.extend(sentence_tokens)
+
+    return trigrams
