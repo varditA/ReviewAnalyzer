@@ -1,6 +1,8 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 
 categories_names = ["GAME_ACTION", "GAME_ADVENTURE", "GAME_ARCADE", "GAME_BOARD", "GAME_CARD",
                     "GAME_CASINO", "GAME_CASUAL", "GAME_EDUCATIONAL", "GAME_MUSIC", "GAME_PUZZLE",
@@ -88,6 +90,16 @@ def getReviews(appsDict, appsList):
         app_title = (soup2.find('h1', {"class": "AHFaub"})).text
         # print(app_title)
         appsList.add(app_title)
+        myLength = len(soup2.findAll('span', jsname="bN97Pc"))
+        while True:
+            driver.execute_script("window.scrollBy(0,400)", "")
+            try:
+                WebDriverWait(driver, 20).until(lambda driver: len(soup2.findAll('span', jsname="bN97Pc")) > myLength)
+                titles = soup2.findAll('span', jsname="bN97Pc")
+                myLength = len(titles)
+            except TimeoutException:
+                break
+        print("length::::" + str(myLength))
         span = soup2.findAll('span', jsname="bN97Pc")
         reviews = []
         for s in span:
