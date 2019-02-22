@@ -47,13 +47,8 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
                  '{:.2f}'.format(col.get_height()),
                  ha='center',
                  va='bottom')
-    plt.savefig(file_path + app_name.replace(" ", "_") + "_plot.png")
-    # plt.show()
 
-
-# Example that can be deleted
-# ngrams_example = [('apple', 'banana', 'orange'), ('pen', 'bike', 'book'), ('dog', 'cat', 'mouse'),
-#                   ('apple', 'hello', 'bye'), ('bla', 'apple', 'bla2'), ('bike', 'bla3', 'orange')]
-# topics_example = {'fruit': ['apple', 'banana', 'orange', 'kiwi'], 'item': ['pen', 'bike', 'book', 'computer'],
-#                   'animal': ['dog', 'cat', 'mouse', 'horse']}
-# plot_reviews_analysis("Seven Boom", ngrams_example, topics_example)
+    name = app_name.replace(" ", "_").replace(":", "-")
+    plt.savefig(file_path + name + "_plot.png")
+    plt.show()
+    print("The graph saved in the 'Graphs' folder with the app name.")
