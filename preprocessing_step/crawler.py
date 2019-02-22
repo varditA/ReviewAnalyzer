@@ -77,33 +77,32 @@ def getReviews(appsDict, appsList):
         for link in soup1.findAll('div', {"class": "card no-rationale square-cover apps small"}):
             href = link.a.get("href")
             apps_urls.add("https://play.google.com" + href)
-        # print(len(apps_urls))
 
+    #get the reviews of each app
     for app_url in apps_urls:
         driver.implicitly_wait(30)
         time.sleep(2)
         driver.get(app_url + "&showAllReviews=true")
+        last_height = driver.execute_script("return document.body.scrollHeight")
+        while True:
+            # Scroll down to bottom
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(2)
+            new_height = driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
         try:
             soup2 = BeautifulSoup(driver.page_source, 'lxml')
         except:
             continue
         app_title = (soup2.find('h1', {"class": "AHFaub"})).text
-        # print(app_title)
         appsList.add(app_title)
-        myLength = len(soup2.findAll('span', jsname="bN97Pc"))
-        while True:
-            driver.execute_script("window.scrollBy(0,400)", "")
-            try:
-                WebDriverWait(driver, 20).until(lambda driver: len(soup2.findAll('span', jsname="bN97Pc")) > myLength)
-                titles = soup2.findAll('span', jsname="bN97Pc")
-                myLength = len(titles)
-            except TimeoutException:
-                break
-        print("length::::" + str(myLength))
         span = soup2.findAll('span', jsname="bN97Pc")
         reviews = []
         for s in span:
             reviews.append(s.text)
-        appsDict[app_title] = reviews
-
+        if(len(reviews)>= 100):
+            appsDict[app_title] = reviews
+    print("num of apps: ", str(len(appsDict)))
     driver.close()
