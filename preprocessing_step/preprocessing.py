@@ -5,7 +5,7 @@ import os
 import crawler as crawler
 
 # getting the popular subjects
-import topic_extractor as topicExtractor
+import tokens_extractor as tokenExtractor
 
 topic_num = 30
 
@@ -18,7 +18,7 @@ def main():
     crawler.getReviews(projects, app_names)
 
     # getting the popular topics in all the apps
-    popular_subjects = topicExtractor.get_apps_popular_nn_aj(projects, topic_num)
+    popular_tokens = tokenExtractor.get_apps_popular_nn_aj(projects, topic_num)
 
     os.path.abspath('..')
 
@@ -27,7 +27,7 @@ def main():
         json.dump(projects, outfile)
 
     app_names = list(app_names)
-    data = {"app_names": app_names, "popular_subjects": popular_subjects}
+    data = {"app_names": app_names, "tokens_extractor": popular_tokens}
     with open('files/info.txt', 'w') as outfile:
         json.dump(data, outfile)
 
