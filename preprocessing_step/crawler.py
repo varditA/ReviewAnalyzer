@@ -6,6 +6,7 @@ categories_names = ["GAME_ACTION", "GAME_ADVENTURE", "GAME_ARCADE", "GAME_BOARD"
                     "GAME_CASINO", "GAME_CASUAL", "GAME_EDUCATIONAL", "GAME_MUSIC", "GAME_PUZZLE",
                     "GAME_RACING", "GAME_ROLE_PLAYING", "GAME_SIMULATION", "GAME_SPORTS", "GAME_STRATEGY"]
 
+
 def getReviews(appsDict, appsList):
     # categories = set()
     apps_urls = set()
@@ -27,7 +28,7 @@ def getReviews(appsDict, appsList):
             href = link.a.get("href")
             apps_urls.add("https://play.google.com" + href)
 
-    #get the reviews of each app
+    # get the reviews of each app
     for app_url in apps_urls:
         driver.implicitly_wait(30)
         time.sleep(2)
@@ -46,12 +47,12 @@ def getReviews(appsDict, appsList):
         except:
             continue
         app_title = (soup2.find('h1', {"class": "AHFaub"})).text
-        appsList.add(app_title)
         span = soup2.findAll('span', jsname="bN97Pc")
         reviews = []
         for s in span:
             reviews.append(s.text)
-        if(len(reviews)>= 20):
+        if len(reviews) >= 20:
             appsDict[app_title] = reviews
+            appsList.add(app_title)
     print("num of apps: ", str(len(appsDict)))
     driver.close()
