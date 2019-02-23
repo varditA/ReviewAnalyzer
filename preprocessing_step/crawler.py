@@ -51,7 +51,7 @@ def getReviews(appsDict, appsList):
         reviews = []
         for s in span:
             reviews.append(s.text)
-        if(len(reviews)>= 100):
+        if(len(reviews)>= 20):
             appsDict[app_title] = reviews
     print("num of apps: ", str(len(appsDict)))
     driver.close()
