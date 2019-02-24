@@ -11,7 +11,7 @@ def getReviews(appsDict, appsList):
     apps_urls = set()
 
     # setting up connection, get the info and closing it
-    driver = webdriver.Chrome('modules/chromedriver.exe')
+    driver = webdriver.Firefox()
     driver.implicitly_wait(30)
 
     # get the apps urls
