@@ -8,7 +8,6 @@ categories_names = ["GAME_ACTION", "GAME_ADVENTURE", "GAME_ARCADE", "GAME_BOARD"
 
 
 def getReviews(appsDict, appsList):
-    # categories = set()
     apps_urls = set()
 
     # setting up connection, get the info and closing it

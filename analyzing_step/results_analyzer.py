@@ -23,7 +23,7 @@ def analyze_results(ngrams, topics):
     return statistics
 
 
-def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
+def plot_reviews_analysis(app_name, ngrams, topics, file_path):
     """
     Plot the given app reviews analysis results
     :param app_name: The application name
@@ -50,11 +50,11 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
 
     name = app_name.replace(" ", "_").replace(":", "-")
     plt.savefig(file_path + name + "_plot.png")
-    plt.show()
+    # plt.show()
     print("The graph saved in the 'Graphs' folder with the app name.")
 
 
-def plot_manual_reviews_analysis(app_name, scores, file_path="files/games/"):
+def plot_manual_reviews_analysis(app_name, scores, file_path):
     """
     Plot the given app reviews analysis results
     :param app_name: The application name
@@ -64,12 +64,12 @@ def plot_manual_reviews_analysis(app_name, scores, file_path="files/games/"):
     """
     total_rating = sum([sum(value) for value in scores.values()])
     names = list(scores.keys())
-    values = (np.array([sum(value)/len(value) for value in scores.values()]) / total_rating)
+    values = (np.array([sum(value)/len(value) for value in scores.values()]) / (total_rating/3))
     plt.clf()
     plt.title("Manual reviews breakdown for \"" + app_name + "\"")
     plt.xlabel('Application problems categories')
     plt.ylim(0, 1)
-    bar = plt.bar(range(len(values)), values, tick_label=names)
+    bar = plt.bar(range(len(values)), values, tick_label=names, color='orange')
 
     for col in bar:
         plt.text(col.get_x() + col.get_width() / 2.0,
@@ -81,6 +81,5 @@ def plot_manual_reviews_analysis(app_name, scores, file_path="files/games/"):
     name = app_name.replace(" ", "_").replace(":", "-")
     plt.savefig(file_path + name + "_manual_plot.png")
     plt.show()
-    print("The graph saved in the 'Graphs' folder with the app name.")
+    print("The graph saved in the 'Graphs/CompareGraphs' folder with the app name.")
 
-plot_manual_reviews_analysis("hello world", {"ads": [10,9,8], "flow": [5,4,5]})

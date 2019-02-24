@@ -20,32 +20,19 @@ def get_app_negative_reviews(app_name, topics):
         print("The number of reviews is not enough to make assumptions.")
         return
 
-    # print("function get_most_popular_trigrams")
-    # n_gram_results = infoExtraction.get_most_popular_trigrams(text, 3)
-    # print(n_gram_results)
-    # neg_sents = sentimentAnalyzer.analyzerFunc(n_gram_results)
-    # print(neg_sents)
-    # results_analyzer.plot_reviews_analysis(appName, n_gram_results, topics, "files/games/")
-
-    # print("function get_sentences_most_popular_trigrams")
-    # get all the trigrams from the reviews
     n_gram_results = info_extraction.get_sentences_most_popular_trigrams(text, 3)
-    # print(n_gram_results)
-    # analyze the sentiment of each trigram, find only the negative trigrams
     neg_sents = sentiment_analyzer.analyzerFunc(n_gram_results)
-    # print(neg_sents)
-    # plot the neg trigrams by the topic
-    return results_analyzer.plot_reviews_analysis(app_name, n_gram_results, topics, "Graphs/")
+    results_analyzer.plot_reviews_analysis(app_name, n_gram_results, topics, "Graphs/")
 
 
 def info_all_apps(app_names, popular_topics):
-    # with open('files/human_results.txt', 'w') as inputFile:
-    #     human_results = json.load(inputFile)
+    with open('files/manual_results.txt', 'r') as inputFile:
+        human_results = json.load(inputFile)
 
     for app_name in app_names:
-        results = get_app_negative_reviews(app_name, popular_topics)
-        # if app_name in human_results:
-        #     results_analyzer.plot_manual_reviews_analysis(app_name, human_results[app_name], "Graphs/CompareResults")
+        get_app_negative_reviews(app_name, popular_topics)
+        if app_name in human_results:
+            results_analyzer.plot_manual_reviews_analysis(app_name, human_results[app_name], "Graphs/CompareResults/")
 
 
 def main():
@@ -58,21 +45,21 @@ def main():
         app_names = data["app_names"]
 
     # run all
-    info_all_apps(app_names, popular_topics)
+    # info_all_apps(app_names, popular_topics)
 
     # User choose which app to run
-    # print("Choose an app name from the following list:")
-    #
-    # index = 1
-    # for app_name in app_names[:15]:
-    #     print(index, app_name)
-    #     index += 1
-    #
-    # app_num = input('Enter the app num: ')
-    # app_name = app_names[int(app_num) - 1]
-    # print('You chose the app ' + app_name)
-    #
-    # get_app_negative_reviews(app_name, popular_topics)
+    print("Choose an app name from the following list:")
+
+    index = 1
+    for app_name in app_names[:15]:
+        print(index, app_name)
+        index += 1
+
+    app_num = input('Enter the app num: ')
+    app_name = app_names[int(app_num) - 1]
+    print('You chose the app ' + app_name)
+
+    get_app_negative_reviews(app_name, popular_topics)
 
 
 if __name__ == "__main__":
