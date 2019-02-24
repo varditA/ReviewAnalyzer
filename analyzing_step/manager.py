@@ -17,6 +17,7 @@ def get_app_negative_reviews(app_name, topics):
 
     reviews_num = len(text)
     if reviews_num < 100:
+        print("The number of reviews is not enough to make assumptions.")
         return
 
     # print("function get_most_popular_trigrams")
@@ -34,13 +35,17 @@ def get_app_negative_reviews(app_name, topics):
     neg_sents = sentiment_analyzer.analyzerFunc(n_gram_results)
     # print(neg_sents)
     # plot the neg trigrams by the topic
-    results_analyzer.plot_reviews_analysis(app_name, n_gram_results, topics, "Graphs/")
+    return results_analyzer.plot_reviews_analysis(app_name, n_gram_results, topics, "Graphs/")
 
 
 def info_all_apps(app_names, popular_topics):
+    # with open('files/human_results.txt', 'w') as inputFile:
+    #     human_results = json.load(inputFile)
+
     for app_name in app_names:
-        print(app_name)
-        get_app_negative_reviews(app_name, popular_topics)
+        results = get_app_negative_reviews(app_name, popular_topics)
+        # if app_name in human_results:
+        #     results_analyzer.plot_manual_reviews_analysis(app_name, human_results[app_name], "Graphs/CompareResults")
 
 
 def main():
