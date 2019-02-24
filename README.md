@@ -1,4 +1,11 @@
 # ReviewAnalyzer
+How to Run:
+_________
+
+./run.sh
+
+You will be asked to choose an application and you will receive the algorithm's results for it by a graph. 
+
 
 Files:
 _____
