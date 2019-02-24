@@ -52,3 +52,35 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path="files/games/"):
     plt.savefig(file_path + name + "_plot.png")
     plt.show()
     print("The graph saved in the 'Graphs' folder with the app name.")
+
+
+def plot_manual_reviews_analysis(app_name, scores, file_path="files/games/"):
+    """
+    Plot the given app reviews analysis results
+    :param app_name: The application name
+    :param scores: list of the scores that the participants gave to each problem according to the application reviews
+    :param topics: dictionary with topics as keys and list of words of values
+    :param file_path: the directory where the file will be saved
+    """
+    total_rating = sum([sum(value) for value in scores.values()])
+    names = list(scores.keys())
+    values = (np.array([sum(value)/len(value) for value in scores.values()]) / total_rating)
+    plt.clf()
+    plt.title("Manual reviews breakdown for \"" + app_name + "\"")
+    plt.xlabel('Application problems categories')
+    plt.ylim(0, 1)
+    bar = plt.bar(range(len(values)), values, tick_label=names)
+
+    for col in bar:
+        plt.text(col.get_x() + col.get_width() / 2.0,
+                 col.get_height(),
+                 '{:.2f}'.format(col.get_height()),
+                 ha='center',
+                 va='bottom')
+
+    name = app_name.replace(" ", "_").replace(":", "-")
+    plt.savefig(file_path + name + "_manual_plot.png")
+    plt.show()
+    print("The graph saved in the 'Graphs' folder with the app name.")
+
+plot_manual_reviews_analysis("hello world", {"ads": [10,9,8], "flow": [5,4,5]})
