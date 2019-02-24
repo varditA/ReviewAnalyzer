@@ -3,6 +3,6 @@
 "Standoff 2": {"Ads": [0,0,1],"Cost":[0,1,0], "Bug":[7,6,6], "UX":[4,5,6], "Appeal":[1,2,1]},
 "Street Racing 3D": {"Ads": [3,2,2], "Cost":[0,0,1], "Bug":[2,1,1], "UX":[5,6,6], "Appeal":[1,2,0]},
 "Trix":  {"Ads": [2,3,1], "Cost":[0,0,0], "Bug":[5,4,4], "UX":[1,2,0],  "Appeal":[6,7,6]},
-"Street Chaser": {"Ads": [0,0,0], "Cost":[1,0,1], "Bug":[3,3,3], "UX":[1,0,1], "Appeal":[1,1,0]}}
+"Street Chaser": {"Ads": [0,0,0], "Cost":[1,1,1], "Bug":[3,3,3], "UX":[1,0,1], "Appeal":[1,1,2]}}
 
 

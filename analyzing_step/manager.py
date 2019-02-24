@@ -45,21 +45,21 @@ def main():
         app_names = data["app_names"]
 
     # run all
-    # info_all_apps(app_names, popular_topics)
+    info_all_apps(app_names, popular_topics)
 
     # User choose which app to run
-    print("Choose an app name from the following list:")
-
-    index = 1
-    for app_name in app_names[:15]:
-        print(index, app_name)
-        index += 1
-
-    app_num = input('Enter the app num: ')
-    app_name = app_names[int(app_num) - 1]
-    print('You chose the app ' + app_name)
-
-    get_app_negative_reviews(app_name, popular_topics)
+    # print("Choose an app name from the following list:")
+    #
+    # index = 1
+    # for app_name in app_names[:15]:
+    #     print(index, app_name)
+    #     index += 1
+    #
+    # app_num = input('Enter the app num: ')
+    # app_name = app_names[int(app_num) - 1]
+    # print('You chose the app ' + app_name)
+    #
+    # get_app_negative_reviews(app_name, popular_topics)
 
 
 if __name__ == "__main__":

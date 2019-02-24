@@ -32,7 +32,7 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path):
     :param file_path: the directory where the file will be saved
     """
     statistics = analyze_results(ngrams, topics)
-    total_rating = sum(list(statistics.values()))
+    total_rating = sum(list(statistics.values())[:-1])
     names = list(statistics.keys())[:-1]
     values = (np.array(list(statistics.values())) / total_rating)[:-1]
     plt.clf()
@@ -50,7 +50,7 @@ def plot_reviews_analysis(app_name, ngrams, topics, file_path):
 
     name = app_name.replace(" ", "_").replace(":", "-")
     plt.savefig(file_path + name + "_plot.png")
-    # plt.show()
+    plt.show()
     print("The graph saved in the 'Graphs' folder with the app name.")
 
 
